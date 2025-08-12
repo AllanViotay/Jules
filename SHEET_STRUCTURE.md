@@ -40,6 +40,7 @@ This sheet stores your API keys and other configurations. The script reads these
 | `Value Prop`       | `[Your one-sentence value proposition]` |
 | `Call to Action`   | `[Your desired call to action]` |
 
+> Note: "Research API Key" refers to your Tavily API key, used for web research.
 
 ---
 

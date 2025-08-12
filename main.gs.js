@@ -99,18 +99,25 @@ function runGeneration() {
 
       Logger.log(`Processing ${firstName} at ${company}...`);
 
-      // 1. Perform Research (Simulated)
+      // 1. Perform Research via Tavily
       const researchQuery = `${company} recent news or about page`;
       const researchResult = callResearchAPI(researchQuery, settings['Research API Key']);
 
-      // 2. Generate Emails (Simulated)
-      const originalEmail = callOpenAI({ model: 'gpt-4o-mini', prompt: prompts['Original Email'] /* + context */ }, settings['OpenAI API Key']);
-      const followup1 = callOpenAI({ model: 'gpt-4o-mini', prompt: prompts['Follow-Up 1'] /* + context */ }, settings['OpenAI API Key']);
-      const followup2 = callOpenAI({ model: 'gpt-4o-mini', prompt: prompts['Follow-Up 2'] /* + context */ }, settings['OpenAI API Key']);
-      const followup3 = callOpenAI({ model: 'gpt-4o-mini', prompt: prompts['Follow-Up 3'] /* + context */ }, settings['OpenAI API Key']);
+      // 2. Generate Emails via OpenAI
+      const originalEmail = callOpenAI(prompts['Original Email'], settings['OpenAI API Key'], 'gpt-4o-mini');
+      const followup1 = callOpenAI(prompts['Follow-Up 1'], settings['OpenAI API Key'], 'gpt-4o-mini');
+      const followup2 = callOpenAI(prompts['Follow-Up 2'], settings['OpenAI API Key'], 'gpt-4o-mini');
+      const followup3 = callOpenAI(prompts['Follow-Up 3'], settings['OpenAI API Key'], 'gpt-4o-mini');
 
       // 3. Write results to the sheet
-      const outputData = [originalEmail, followup1, followup2, followup3, researchResult, 'simulated-source.com'];
+      const outputData = [
+        originalEmail,
+        followup1,
+        followup2,
+        followup3,
+        researchResult.snippets,
+        researchResult.urls,
+      ];
       contactsSheet.getRange(index + 2, headers.length + 1, 1, outputData.length).setValues([outputData]);
 
       // Add a small delay to avoid overwhelming the APIs

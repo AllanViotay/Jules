@@ -10,7 +10,7 @@ function showSettingsSidebar() {
       <p>Required settings:</p>
       <ul>
         <li>OpenAI API Key</li>
-        <li>Research API Key</li>
+        <li>Research API Key (Tavily)</li>
         <li>Your Name</li>
         <li>Your Company</li>
         <li>Value Prop</li>

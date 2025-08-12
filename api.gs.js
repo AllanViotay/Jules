@@ -38,25 +38,30 @@ function callOpenAI(prompt, apiKey, model = 'gpt-4o-mini') {
 }
 
 /**
- * Makes a call to the Research API (Serper).
+ * Makes a call to the Research API (Tavily).
  *
  * @param {string} query The search query.
- * @param {string} apiKey The Research API key.
+ * @param {string} apiKey The research API key (Tavily).
  * @return {{snippets: string, urls: string}} An object containing formatted snippets and source URLs.
  */
 function callResearchAPI(query, apiKey) {
-  const url = 'https://google.serper.dev/search';
+  const url = 'https://api.tavily.com/search';
 
-  const payload = { q: query };
+  // Tavily accepts api_key in the JSON payload. We keep results small and depth basic for cost/speed.
+  const payload = {
+    api_key: apiKey,
+    query: query,
+    search_depth: 'basic',
+    include_answer: false,
+    include_raw_content: false,
+    max_results: 3,
+  };
 
   const options = {
-    'method': 'post',
-    'contentType': 'application/json',
-    'headers': {
-      'X-API-KEY': apiKey,
-    },
-    'payload': JSON.stringify(payload),
-    'muteHttpExceptions': true,
+    method: 'post',
+    contentType: 'application/json',
+    payload: JSON.stringify(payload),
+    muteHttpExceptions: true,
   };
 
   const response = UrlFetchApp.fetch(url, options);
@@ -68,20 +73,19 @@ function callResearchAPI(query, apiKey) {
     let snippets = '';
     let urls = [];
 
-    if (parsedBody.organic && parsedBody.organic.length > 0) {
-      // Extract snippets and URLs from the top 3 results
-      parsedBody.organic.slice(0, 3).forEach(item => {
-        if (item.snippet) {
-          snippets += `- ${item.snippet}\n`;
-        }
-        if (item.link) {
-          urls.push(item.link);
-        }
-      });
-    }
+    const results = Array.isArray(parsedBody.results) ? parsedBody.results : [];
+    results.slice(0, 3).forEach(item => {
+      if (item.content) {
+        snippets += `- ${item.content}\n`;
+      }
+      if (item.url) {
+        urls.push(item.url);
+      }
+    });
+
     return {
-        snippets: snippets || "No relevant snippets found.",
-        urls: urls.join(', ')
+      snippets: snippets || 'No relevant snippets found.',
+      urls: urls.join(', '),
     };
   } else {
     Logger.log(`Research API Error: ${responseCode} ${responseBody}`);
