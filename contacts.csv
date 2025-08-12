@@ -1,0 +1,4 @@
+FirstName,LastName,Email,Company,Title,WebsiteOrProfileURL,Notes
+Sam,Altman,sam@openai.com,OpenAI,CEO,https://openai.com/blog/author/sam-altman,"Discussing AGI safety"
+Dana,Ross,dana@salesforce.com,Salesforce,SDR,https://www.salesforce.com/company/news/,"Lead from Dreamforce conference"
+Alex,Karp,alex@palantir.com,Palantir,CEO,https://www.palantir.com/newsroom/,"Partnership outreach for new affiliate program"
