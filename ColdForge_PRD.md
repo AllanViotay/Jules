@@ -14,7 +14,7 @@
 | **[TARGET_USER]**         | “Solo founders, SDRs, indie marketers”                                            | N/A (Default)                                                                                          |
 | **[BUILD_PLATFORM]**      | **Primary:** Next.js + Vercel Free Tier. **Fallback:** Google Sheets + Apps Script. | A full-stack app provides better UX and scalability, while the fallback ensures ultra-low cost/effort. |
 | **[OPENAI_MODEL]**        | “gpt-4o-mini”                                                                     | This model offers the best balance of cost, speed, and quality for this task.                          |
-| **[RESEARCH_API]**        | **Primary:** [Serper](https://serper.dev/) for search. **Secondary:** Manual URL paste. | Serper is chosen for its low cost ($2.50 for 2,500 queries) and speed. A manual option is a crucial fallback. |
+| **[RESEARCH_API]**        | **Primary:** [Tavily](https://tavily.com/) for search. **Secondary:** Manual URL paste. | Tavily is chosen for its simple API and fast results. A manual option is a crucial fallback. |
 | **[BUDGET_CAP_USD]**      | 10                                                                                | Per month. This cap forces extreme efficiency in API usage.                                            |
 | **[MAX_ROWS]**            | 2,000                                                                             | Per single upload/run. This balances utility with browser/serverless function memory limits.           |
 | **[TONE]**                | “Helpful, concise, non-salesy”                                                    | N/A (Default)                                                                                          |
@@ -217,7 +217,7 @@ The exported file will be the original file with these columns appended.
 {
   "user_id": "user_abc",
   "openai_api_key": "sk-...", // Encrypted at rest
-  "research_api_key": "serper_...", // Encrypted at rest
+  "research_api_key": "tavily_...", // Encrypted at rest
   "budget_cap_usd": 10,
   "model": "gpt-4o-mini",
   "concurrency": 5, // Number of parallel requests
@@ -453,7 +453,7 @@ Draft a respectful closing email.
         +--------------------------------------------------+
         | --- API Keys ---                                 |
         | OpenAI API Key:     [sk-******************] [Save]|
-        | Research API Key:   [serper_************] [Save]|
+        | Research API Key:   [tavily_************] [Save]|
         |                                                  |
         | --- Controls ---                                 |
         | Budget Cap (USD): [10.00]                          |
@@ -641,10 +641,10 @@ This is the ultra-low-cost, no-hosting-required alternative.
 ### Cost Breakdown (Estimates)
 
 **Assumptions:**
--   [OPENAI_MODEL]: `gpt-4o-mini` at ~$0.15/M input tokens, ~$0.60/M output tokens.
--   [RESEARCH_API]: Serper at $2.50/2500 searches.
--   Avg. research content per contact: 4000 tokens.
--   Avg. synthesized snippets per contact: 200 tokens.
+-   [OPENAI_MODEL]: `gpt-4o-mini`.
+-   [RESEARCH_API]: Tavily basic search.
+    -   Avg. research content per contact: 4000 tokens.
+    -   Avg. synthesized snippets per contact: 200 tokens.
 -   Avg. email length: 200 tokens.
 -   Total calls per contact: 1 search, 1 research synthesis, 4 email drafts.
 

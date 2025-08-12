@@ -58,7 +58,7 @@ You should now see a new custom menu named **"ColdForge"** in the spreadsheet's 
 
 1.  **Populate your sheets:**
     -   Paste your contact data into the `Contacts` sheet.
-    -   Fill out your API keys and other info in the `Settings` sheet.
+    -   Fill out your API keys and other info in the `Settings` sheet (OpenAI API Key and Tavily Research API Key).
     -   Paste the prompt templates into the `Prompts` sheet.
 2.  Click on the `ColdForge` menu and select `Run Generation`.
 3.  **Authorization:** The first time you run it, Google will ask you to authorize the script.
